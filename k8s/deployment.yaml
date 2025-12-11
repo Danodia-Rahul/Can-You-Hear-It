@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: can-you-hear-it-deployment
+  namespace: default
+  labels:
+    app: can-you-hear-it
+spec:
+  selector:
+    matchLabels:
+      app: can-you-hear-it-pods
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: can-you-hear-it-pods
+      labels:
+        app: can-you-hear-it-pods
+    spec:
+      containers:
+        - name: can-you-hear-it-containers
+          image: danodiarahul/can-you-hear-it:v1
+          imagePullPolicy:
+          resources:
+            requests:
+              cpu: 300m
+              memory: 500Mi
+            limits:
+              cpu: 500m
+              memory: 700Mi
+          livenessProbe:
+            httpGet:
+              path: /app/
+              port: 8501
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /app/
+              port: 8501
+            initialDelaySeconds: 5
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+            periodSeconds: 10
+          ports:
+            - containerPort: 8501
+      restartPolicy: Always

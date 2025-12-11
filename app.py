@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit.elements.lib.layout_utils import WidthWithoutContent
 
 st.set_page_config(page_title="Can You Hear It?", layout="centered")
 
