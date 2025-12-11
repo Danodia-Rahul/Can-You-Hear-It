@@ -32,7 +32,7 @@ spec:
               memory: 700Mi
           livenessProbe:
             httpGet:
-              path: /app/
+              path: /
               port: 8501
             initialDelaySeconds: 5
             timeoutSeconds: 5
@@ -41,7 +41,7 @@ spec:
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /app/
+              path: /
               port: 8501
             initialDelaySeconds: 5
             timeoutSeconds: 2
